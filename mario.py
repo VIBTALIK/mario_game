@@ -62,4 +62,75 @@ class Dragon:
             elif self.down:
                 self.dragon_img_rect.top += self.dragon_velocity
 
+class Flames:
+    flames_velocity = 20
+
+
+    def __init__(self):
+        self.flames = pygame.image.load("fireball.png")
+        self.flames_img = pygame.transform.scale(self.flames, (20, 20))
+        self.flames_img_rect = self.flames_img.get_rect()
+        self.flames_img_rect.right = dragon.dragon_img_rect.left
+        self.flames_img_rect.top = dragon.dragon_img_rect.top +30
+
+    def update(self):
+        canvas.blit(self.flames_img, self.flames_img_rect)
+
+        if self.flames_img_rect.left > 0:
+            self.flames_img_rect.left -= self.
+            
+
+class Mario:
+    velocity = 10
+
+
+    def __init__(self):
+        self.mario_img = pygame.image.load("maryo.png")
+        self.mario_img_rect = self.mario_img.get_rect()
+        self.mario_img_rect.left = 20
+        self.mario_img_rect.top = WINDOW_HEIGHT/2 -100
+        self.down = True
+        self.up = False
+
+
+    def update(self):
+        canvas.blit(self.mario_img, self.mario_img_rect)
+        if self.mario_img_rect.bottom <= cactus_img_rect.bottom:
+            game_over()
+            if SCORE > self.mario.score:
+                self.mario_score = SCORE
+
+        if self.mario_img_rect.bottom >= fire_img_rect.top:
+            game_over()
+            if SCORE > self.mario.score:
+                self.mario_score = SCORE
+
+        
+        if self.up:
+            self.mario_img_rect.top -= 10
+        if self.down:
+            self.mario_img_rect.bottom += 10
+
+def game_over():
+    pygame.mixer.music.stop()
+    music = pygame.mixer.Sound("mario_dies.wav")
+    music.play()
+    topscore.top_score(SCORE)
+    game_over_img = pygame.image.load("end.png")
+    game_over_img_rect = game_over_img.pygame.get_rect()
+    game_over_img_rect.center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
+    canvas.blit(game_over_img, game_over_img_rect)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+        pygame.dispaly.update()
+
+
+
 
